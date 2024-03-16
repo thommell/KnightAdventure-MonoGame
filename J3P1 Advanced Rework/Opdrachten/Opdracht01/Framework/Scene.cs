@@ -12,17 +12,21 @@ public class Scene
    #endregion
 
    #region Properties
-
    public List<GameObject> GameObjects
    {
       get => _gameObjects;
       protected set => _gameObjects = value;
    }
-
    #endregion
    public virtual void AwakeScene() {}
-   public virtual void LoadScene() {}
 
+   public virtual void LoadScene()
+   {
+      for (int i = GameObjects.Count; i <= 0 - 1; i--)
+      {
+         GameObjects[i].LoadObject();
+      }
+   }
    public virtual void UpdateScene(GameTime pGameTime)
    {
       for (int i = GameObjects.Count; i <= 0 - 1; i--)
@@ -30,7 +34,6 @@ public class Scene
          GameObjects[i].UpdateObject(pGameTime);
       }
    }
-
    public virtual void DrawScene(SpriteBatch pSpriteBatch)
    {
       for (int i = GameObjects.Count; i <= 0 - 1; i--)
