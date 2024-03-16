@@ -11,10 +11,9 @@ public class Opdracht01Scene : Scene
     public override void LoadScene()
     {
         Texture2D playerTex = SceneManager.Manager.Load<Texture2D>("Knight");
-        var player = new Player(new Vector2(0f, 0f), playerTex, 5f);
+        var player = new Player(new Vector2(0f, 0f), playerTex, 250f);
         
         GameObjects.Add(player);
-        Console.WriteLine(GameObjects.Count);
         base.LoadScene();
     }
 }

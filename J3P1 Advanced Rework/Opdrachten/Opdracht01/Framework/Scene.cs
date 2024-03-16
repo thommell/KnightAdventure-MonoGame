@@ -10,7 +10,6 @@ public class Scene
    private List<GameObject> _gameObjects = new List<GameObject>();
    
    #endregion
-
    #region Properties
    public List<GameObject> GameObjects
    {
@@ -19,24 +18,23 @@ public class Scene
    }
    #endregion
    public virtual void AwakeScene() {}
-
    public virtual void LoadScene()
    {
-      for (int i = GameObjects.Count; i <= 0 - 1; i--)
+      for (int i = 0; i < GameObjects.Count; i++)
       {
          GameObjects[i].LoadObject();
       }
    }
    public virtual void UpdateScene(GameTime pGameTime)
    {
-      for (int i = GameObjects.Count; i <= 0 - 1; i--)
+      for (int i = 0; i < GameObjects.Count; i++)
       {
          GameObjects[i].UpdateObject(pGameTime);
       }
    }
    public virtual void DrawScene(SpriteBatch pSpriteBatch)
    {
-      for (int i = GameObjects.Count; i <= 0 - 1; i--)
+      for (int i = 0; i < GameObjects.Count; i++)
       {
          GameObjects[i].DrawObject(pSpriteBatch);
       }

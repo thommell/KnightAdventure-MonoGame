@@ -28,9 +28,6 @@ public class Game1 : Game
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
         SceneManager.Manager = Content;
-        
-        
-        
         SceneManager.LoadManager();
         // TODO: use this.Content to load your game content here
     }
@@ -42,8 +39,10 @@ public class Game1 : Game
 
     protected override void Draw(GameTime gameTime)
     {
+        _spriteBatch.Begin();
         GraphicsDevice.Clear(Color.CornflowerBlue);
         SceneManager.DrawManager(_spriteBatch);
+        _spriteBatch.End();
         base.Draw(gameTime);
     }
 }

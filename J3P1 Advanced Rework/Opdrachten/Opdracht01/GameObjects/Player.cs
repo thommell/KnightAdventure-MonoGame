@@ -14,30 +14,25 @@ public class Player : GameObject
     private Keys _leftKey = Keys.A;
     private Keys _rightKey = Keys.D;
     private Keys _downKey = Keys.S;
-    private KeyboardState _keyboard;
 
     #endregion
-
     #region Variables
-
+    
     private float _speed;
-
+    
     #endregion
 
     #region Properties
-
     public float Speed
     {
         get => _speed;
         set => _speed = value;
     }
-
     #endregion
     public Player(Vector2 pPosition, Texture2D pTexture, float pSpeed) : base(pPosition, pTexture)
     {
         Speed = pSpeed;
     }
-
     public override void UpdateObject(GameTime pGameTime)
     {
         Movement(pGameTime);
@@ -45,17 +40,19 @@ public class Player : GameObject
     }
     private void Movement(GameTime pGameTime)
     {
-        Vector2 direction = new Vector2();
+        KeyboardState keyboard = Keyboard.GetState();
+        Vector2 direction = Vector2.Zero;
         
-        if (_keyboard.IsKeyDown(_upKey))
+        if (keyboard.IsKeyDown(_upKey))
             direction.Y--;
-        if (_keyboard.IsKeyDown(_downKey))
+        if (keyboard.IsKeyDown(_downKey))
             direction.Y++;
-        if (_keyboard.IsKeyDown(_rightKey))
+        if (keyboard.IsKeyDown(_rightKey))
             direction.X++;
-        if (_keyboard.IsKeyDown(_leftKey))
+        if (keyboard.IsKeyDown(_leftKey))
             direction.X--;
         if (direction == Vector2.Zero) return;
+        direction.Normalize();
         Position += direction * Speed * (float)pGameTime.ElapsedGameTime.TotalSeconds;
     }
 }
