@@ -1,5 +1,7 @@
 #region Library
 
+using System;
+using System.Collections.Generic;
 using System.Security.Cryptography.Pkcs;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -51,7 +53,6 @@ public class GameObject
     {
         Position = pPosition;
         Texture = pTexture;
-        Rectangle = new Rectangle(0, 0, 0, 0);
         Origin = GetOrigin();
     }
     public virtual void LoadObject() {}

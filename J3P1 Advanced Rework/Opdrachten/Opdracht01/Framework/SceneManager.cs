@@ -9,6 +9,7 @@ namespace J3P1_Advanced_Rework.Opdrachten.Opdracht01.Framework;
 public static class SceneManager
 {
     public static Scene CurrentScene;
+    public static GraphicsDevice GraphicsDevice;
     public static List<Scene> ScenesList = new List<Scene>();
     public static int IndexOfScene = 0;
     public static Game1 Game1;
@@ -26,7 +27,7 @@ public static class SceneManager
     public static void DrawManager(SpriteBatch pSpriteBatch) => CurrentScene.DrawScene(pSpriteBatch);
     private static void MakeScenes()
     {
-        var scene01 = new Opdracht01Scene();
+        Scene scene01 = new Opdracht01Scene();
         ScenesList.Add(scene01);
     }
 }

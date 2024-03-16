@@ -10,7 +10,6 @@ public class Game1 : Game
 {
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
-
     public Game1()
     {
         _graphics = new GraphicsDeviceManager(this);
@@ -19,7 +18,7 @@ public class Game1 : Game
     }
     protected override void Initialize()
     {
-        // TODO: Add your initialization logic here
+        SceneManager.GraphicsDevice = _graphics.GraphicsDevice;
         SceneManager.Game1 = this;
         SceneManager.AwakeManager();
         base.Initialize();
@@ -29,14 +28,12 @@ public class Game1 : Game
         _spriteBatch = new SpriteBatch(GraphicsDevice);
         SceneManager.Manager = Content;
         SceneManager.LoadManager();
-        // TODO: use this.Content to load your game content here
     }
     protected override void Update(GameTime gameTime)
     {
         SceneManager.UpdateManager(gameTime);
         base.Update(gameTime);
     }
-
     protected override void Draw(GameTime gameTime)
     {
         _spriteBatch.Begin();

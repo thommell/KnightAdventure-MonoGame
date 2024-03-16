@@ -42,7 +42,6 @@ public class Player : GameObject
     {
         KeyboardState keyboard = Keyboard.GetState();
         Vector2 direction = Vector2.Zero;
-        
         if (keyboard.IsKeyDown(_upKey))
             direction.Y--;
         if (keyboard.IsKeyDown(_downKey))

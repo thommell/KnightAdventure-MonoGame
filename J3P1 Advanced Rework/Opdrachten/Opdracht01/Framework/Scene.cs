@@ -6,18 +6,37 @@ namespace J3P1_Advanced_Rework.Opdrachten.Opdracht01.Framework;
 public class Scene
 {
    #region Variables
-   
+
+   private float _windowWidth;
+   private float _windowHeight;
    private List<GameObject> _gameObjects = new List<GameObject>();
    
    #endregion
    #region Properties
+
+   public float WindowWidth
+   {
+      get => _windowWidth;
+      set => _windowWidth = value;
+   }
+
+   public float WindowHeight
+   {
+      get => _windowHeight;
+      set => _windowHeight = value;
+   }
    public List<GameObject> GameObjects
    {
       get => _gameObjects;
       protected set => _gameObjects = value;
    }
    #endregion
-   public virtual void AwakeScene() {}
+
+   public virtual void AwakeScene()
+   {
+      WindowWidth = SceneManager.GraphicsDevice.Viewport.Width;
+      WindowHeight = SceneManager.GraphicsDevice.Viewport.Height;
+   }
    public virtual void LoadScene()
    {
       for (int i = 0; i < GameObjects.Count; i++)
