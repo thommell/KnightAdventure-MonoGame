@@ -1,52 +1,46 @@
-﻿using Microsoft.Xna.Framework;
+﻿using J3P1_Advanced_Rework.Opdrachten.Opdracht01.Framework;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace J3P1_Advanced_Rework;
+namespace J3P1_Advanced_Rework.Opdrachten.Opdracht01;
 
 public class Game1 : Game
 {
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
-
     public Game1()
     {
         _graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
     }
-
     protected override void Initialize()
     {
-        // TODO: Add your initialization logic here
-
-        base.Initialize();
+        SceneManager.GraphicsDevice = _graphics.GraphicsDevice;
+        SceneManager.Game1 = this;
+        SceneManager.AwakeManager();
+        base.Initialize();   
     }
-
     protected override void LoadContent()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
-
-        // TODO: use this.Content to load your game content here
+        SceneManager.Manager = Content;
+        SceneManager.Viewport = new Viewport(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
+        SceneManager.LoadManager();
     }
-
     protected override void Update(GameTime gameTime)
     {
-        if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed ||
-            Keyboard.GetState().IsKeyDown(Keys.Escape))
-            Exit();
-
-        // TODO: Add your update logic here
-
+        SceneManager.UpdateManager(gameTime);
         base.Update(gameTime);
     }
-
     protected override void Draw(GameTime gameTime)
     {
+        _spriteBatch.Begin();
         GraphicsDevice.Clear(Color.CornflowerBlue);
-
-        // TODO: Add your drawing code here
-
+        SceneManager.DrawManager(_spriteBatch);
+        _spriteBatch.End();
         base.Draw(gameTime);
     }
 }
