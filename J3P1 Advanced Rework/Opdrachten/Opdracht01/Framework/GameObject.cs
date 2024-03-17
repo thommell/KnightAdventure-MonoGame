@@ -55,9 +55,18 @@ public class GameObject
         Texture = pTexture;
         Origin = GetOrigin();
     }
-    public virtual void LoadObject() {}
-    public virtual void UpdateObject(GameTime pGameTime) {
-        Rectangle = new Rectangle((int)_position.X, (int)_position.Y , Texture.Width, Texture.Height);
+    public virtual void LoadObject() => Rectangle = GetRectangle();
+    public virtual void UpdateObject(GameTime pGameTime)
+    {
+        Rectangle = GetRectangle();
+    }
+    private Rectangle GetRectangle()
+    {
+        return new Rectangle(
+            (int)_position.X - (int)Origin.X,
+            (int)_position.Y - (int)Origin.Y,
+            Texture.Width, Texture.Height
+        );
     }
     private Vector2 GetOrigin()
     {
@@ -65,6 +74,6 @@ public class GameObject
     }
     public virtual void DrawObject(SpriteBatch pSpriteBatch)
     {
-        pSpriteBatch.Draw(Texture, _position, null, Color.White, 0f, Origin, Vector2.One, SpriteEffects.None, 0f);
+        pSpriteBatch.Draw(Texture, _position, null, Color.White, MathHelper.ToRadians(Rotation), Origin, Vector2.One, SpriteEffects.None, 0f);
     }
 }

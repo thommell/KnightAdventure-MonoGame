@@ -1,33 +1,33 @@
+#region Libraries
+
 using System;
 using System.Collections.Generic;
 using J3P1_Advanced_Rework.Opdrachten.Opdracht01.GameObjects;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
+#endregion
 namespace J3P1_Advanced_Rework.Opdrachten.Opdracht01.Framework;
-
-public class Interactable : GameObject
+public abstract class Interactable : GameObject
 {
-    //private Player _player;
-    public Interactable(Vector2 pPosition, Texture2D pTexture) : base(pPosition, pTexture)
-    {   
-        
-    }
-    public override void UpdateObject(GameTime pGameTime)
+    internal Player _playerInstance;
+    public Interactable(Vector2 pPosition, Texture2D pTexture) : base(pPosition, pTexture) {}
+    public override void LoadObject()
     {
-        OnCollision();
-        base.UpdateObject(pGameTime);
+        base.LoadObject();
+        _playerInstance = GetPlayer();
     }
-    public void OnCollision()
+    private Player GetPlayer()
     {
         List<GameObject> objects = SceneManager.CurrentScene.GameObjects;
-        foreach (var obj in objects)
+        Player localPlayer;
+        for (int i = objects.Count - 1; i >= 0; i--)
         {
-            if (obj == this) continue;
-            if (obj.Rectangle.Intersects(Rectangle))
-            {
-                Console.WriteLine(obj.Rectangle);
-            }
-        }   
+            if (objects[i].GetType() != typeof(Player)) continue; 
+            localPlayer = (Player)objects[i];
+            return localPlayer;
+        }
+        return null;
     }
+    public abstract void Interact(Player pPlayer);
 }

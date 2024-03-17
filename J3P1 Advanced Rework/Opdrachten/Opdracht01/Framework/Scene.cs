@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -58,5 +59,10 @@ public class Scene
          GameObjects[i].DrawObject(pSpriteBatch);
       }
    }
-   public void RemoveObject() {}
+
+   public void RemoveObject(GameObject pObj)
+   {
+      if (!GameObjects.Contains(pObj)) return;
+      GameObjects.Remove(pObj);
+   }
 }
