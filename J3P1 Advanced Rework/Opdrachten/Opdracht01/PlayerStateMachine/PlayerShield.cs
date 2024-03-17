@@ -12,8 +12,5 @@ public class PlayerShield : IPlayerState
     }
     public Texture2D PlayerTexture { get; }
     public Player Player { get; }
-    public void OnStateEnter()
-    {
-        Player.Texture = PlayerTexture;
-    }
+    public void OnStateEnter() => Player.Texture = PlayerTexture;
 }

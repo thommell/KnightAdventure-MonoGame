@@ -21,12 +21,13 @@ public class Game1 : Game
         SceneManager.GraphicsDevice = _graphics.GraphicsDevice;
         SceneManager.Game1 = this;
         SceneManager.AwakeManager();
-        base.Initialize();
+        base.Initialize();   
     }
     protected override void LoadContent()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
         SceneManager.Manager = Content;
+        SceneManager.Viewport = new Viewport(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
         SceneManager.LoadManager();
     }
     protected override void Update(GameTime gameTime)

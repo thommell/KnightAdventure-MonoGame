@@ -11,7 +11,7 @@ namespace J3P1_Advanced_Rework.Opdrachten.Opdracht01.Framework;
 public abstract class Interactable : GameObject
 {
     internal Player _playerInstance;
-    public Interactable(Vector2 pPosition, Texture2D pTexture) : base(pPosition, pTexture) {}
+    protected Interactable(Vector2 pPosition, Texture2D pTexture) : base(pPosition, pTexture) {}
     public override void LoadObject()
     {
         base.LoadObject();

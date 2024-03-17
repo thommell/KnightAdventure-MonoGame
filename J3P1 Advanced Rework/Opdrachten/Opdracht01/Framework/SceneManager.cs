@@ -14,6 +14,7 @@ public static class SceneManager
     public static int IndexOfScene = 0;
     public static Game1 Game1;
     public static ContentManager Manager;
+    public static Viewport Viewport;
     public static void SwapScene() {}
     public static void AwakeManager()
     {

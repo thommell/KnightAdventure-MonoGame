@@ -25,7 +25,7 @@ public class Player : GameObject
     #region Variables
     
     private float _speed;
-    private PlayerStateMachine.StateMachinePlayer _stateMachinePlayerStateMachinePlayer;
+    private PlayerStateMachine.StateMachinePlayer _playerStateManager;
     private bool _hasShield;
     private bool _hasWeapon;
     
@@ -57,24 +57,23 @@ public class Player : GameObject
     }
 
     #endregion
-    public Player(Vector2 pPosition, Texture2D pTexture, float pSpeed) : base(pPosition, pTexture)
-    {
-        Speed = pSpeed;
-    }
+
+    public Player(Vector2 pPosition, Texture2D pTexture, float pSpeed) : base(pPosition, pTexture) => Speed = pSpeed;
     public override void LoadObject()
     {
         base.LoadObject();
-        _stateMachinePlayerStateMachinePlayer = new StateMachinePlayer(this);
+        _playerStateManager = new StateMachinePlayer(this);
     }
     public override void UpdateObject(GameTime pGameTime)
     {
+        ClampPlayer();
         Movement(pGameTime);
-        OnCollision();
+        CheckCollision();
         base.UpdateObject(pGameTime);
     }
     private void SwitchState()
     {
-        StateMachinePlayer sm = _stateMachinePlayerStateMachinePlayer;
+        var sm = _playerStateManager;
         if (_hasShield)
             sm.ChangeState(sm.PlayerShield);
         if (_hasWeapon)
@@ -82,22 +81,26 @@ public class Player : GameObject
         if (_hasShield && _hasWeapon)
             sm.ChangeState(sm.PlayerWeaponShield);
     }
-    private void OnCollision()
+    private void CheckCollision()
     {
         List<GameObject> objects = SceneManager.CurrentScene.GameObjects;
         for (int i = objects.Count - 1; i >= 0; i--)
         {
-            // continue back through the loop to check if its not colliding with itself.
+            // continue back through the loop to check if its not colliding with itself
             if (objects[i] == this) continue;
             // continue back through the loop if there is no collision
             if (!objects[i].Rectangle.Intersects(Rectangle)) continue;
             // continue back through the loop if object isn't an interactable
             if (!objects[i].GetType().IsSubclassOf(typeof(Interactable))) continue;
-            
             Console.WriteLine("Interactable Collision");
             Interactable obj = (Interactable)objects[i];
             obj.Interact(this);
         }   
+    }
+
+    private void ClampPlayer()
+    {
+        Position = new Vector2(Math.Clamp(Position.X, 0, SceneManager.Viewport.Width - Texture.Width), Math.Clamp(Position.Y, 0, SceneManager.Viewport.Height - Texture.Height));
     }
     private void Movement(GameTime pGameTime)
     {
