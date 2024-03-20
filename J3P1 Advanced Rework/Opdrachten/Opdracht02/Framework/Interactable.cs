@@ -1,13 +1,12 @@
 #region Libraries
 
-using System;
 using System.Collections.Generic;
-using J3P1_Advanced_Rework.Opdrachten.Opdracht01.GameObjects;
+using J3P1_Advanced_Rework.Opdrachten.Opdracht02.GameObjects;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 #endregion
-namespace J3P1_Advanced_Rework.Opdrachten.Opdracht01.Framework;
+namespace J3P1_Advanced_Rework.Opdrachten.Opdracht02.Framework;
 public abstract class Interactable : GameObject
 {
     internal Player _playerInstance;

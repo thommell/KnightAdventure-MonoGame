@@ -1,8 +1,7 @@
-using J3P1_Advanced_Rework.Opdrachten.Opdracht01.GameObjects;
+using J3P1_Advanced_Rework.Opdrachten.Opdracht02.GameObjects;
 using Microsoft.Xna.Framework.Graphics;
-using SharpDX.MediaFoundation;
 
-namespace J3P1_Advanced_Rework.Opdrachten.Opdracht01.PlayerStateMachine;
+namespace J3P1_Advanced_Rework.Opdrachten.Opdracht02.PlayerStateMachine;
 
 public class PlayerShield : IPlayerState
 {

@@ -1,13 +1,10 @@
 #region Library
 
-using System;
-using System.Collections.Generic;
-using System.Security.Cryptography.Pkcs;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+
 #endregion
-namespace J3P1_Advanced_Rework.Opdrachten.Opdracht01.Framework;
+namespace J3P1_Advanced_Rework.Opdrachten.Opdracht02.Framework;
 public class GameObject
 {
     #region Variables
@@ -16,6 +13,7 @@ public class GameObject
     private Vector2 _origin;
     private Texture2D _texture;
     private Rectangle _rectangle;
+    private Color _color;
     private float _rotation;
     
     #endregion
@@ -47,11 +45,18 @@ public class GameObject
         get => _rotation;
         set => _rotation = value;
     }
+
+    public Color Color
+    {
+        get => _color;
+        set => _color = value;
+    }
     #endregion
     protected GameObject(Vector2 pPosition, Texture2D pTexture)
     {
         Position = pPosition;
         Texture = pTexture;
+        Color = Color.White;
         Origin = GetOrigin();
     }
     public virtual void LoadObject() => Rectangle = GetRectangle();
@@ -64,5 +69,5 @@ public class GameObject
     {
         return new Vector2(Texture.Width * 0.5f, Texture.Height * 0.5f);
     }
-    public virtual void DrawObject(SpriteBatch pSpriteBatch) => pSpriteBatch.Draw(Texture, _position, null, Color.White, MathHelper.ToRadians(Rotation), Origin, Vector2.One, SpriteEffects.None, 0f);
+    public virtual void DrawObject(SpriteBatch pSpriteBatch) => pSpriteBatch.Draw(Texture, _position, null, Color, MathHelper.ToRadians(Rotation), Origin, Vector2.One, SpriteEffects.None, 0f);
 }

@@ -1,15 +1,12 @@
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Reflection.Metadata.Ecma335;
-using J3P1_Advanced_Rework.Opdrachten.Opdracht01.Framework;
-using J3P1_Advanced_Rework.Opdrachten.Opdracht01.PlayerStateMachine;
+using J3P1_Advanced_Rework.Opdrachten.Opdracht02.Framework;
+using J3P1_Advanced_Rework.Opdrachten.Opdracht02.PlayerStateMachine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using J3P1_Advanced_Rework.Opdrachten.Opdracht01.PlayerStateMachine;
 
-namespace J3P1_Advanced_Rework.Opdrachten.Opdracht01.GameObjects;
+namespace J3P1_Advanced_Rework.Opdrachten.Opdracht02.GameObjects;
 
 public class Player : GameObject
 {
@@ -25,7 +22,7 @@ public class Player : GameObject
     #region Variables
     
     private float _speed;
-    private PlayerStateMachine.StateMachinePlayer _playerStateManager;
+    private StateMachinePlayer _playerStateManager;
     private bool _hasShield;
     private bool _hasWeapon;
     
