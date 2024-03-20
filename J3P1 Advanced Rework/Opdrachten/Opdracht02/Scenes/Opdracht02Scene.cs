@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace J3P1_Advanced_Rework.Opdrachten.Opdracht02.Scenes;
 
-public class Opdracht01Scene : Scene
+public class Opdracht02Scene : Scene
 {
     public override void LoadScene()
     {
@@ -37,8 +37,8 @@ public class Opdracht01Scene : Scene
             new Vector2(
                 WindowWidth / 1.25f,
                 WindowHeight / 1.25f
-                ),
-                gateTex);
+            ),
+            gateTex);
 
         #endregion
         GameObjects.Add(player);
