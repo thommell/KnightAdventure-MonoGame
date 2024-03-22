@@ -28,7 +28,7 @@ public class Player : Humanoid
     private bool _hasShield;
     private bool _hasWeapon;
 
-    private Vector2 originPosition;
+    private readonly Vector2 _originalPosition;
     
     #endregion
     #region Properties
@@ -37,7 +37,6 @@ public class Player : Humanoid
         get => _speed;
         set => _speed = value;
     }
-
     public bool HasWeapon
     {
         set
@@ -46,7 +45,6 @@ public class Player : Humanoid
             SwitchState(); 
         } 
     }
-
     public bool HasShield
     {
         set
@@ -61,7 +59,7 @@ public class Player : Humanoid
     public Player(Vector2 pPosition, Texture2D pTexture, float pSpeed, int pHealth, int pStrength) : base(pPosition, pTexture, pHealth, pStrength)
     {
         Speed = pSpeed;
-        originPosition = pPosition;
+        _originalPosition = pPosition;
     }
     public override void LoadObject()
     {
@@ -116,7 +114,6 @@ public class Player : Humanoid
         direction.Normalize();
         Position += direction * Speed * (float)pGameTime.ElapsedGameTime.TotalSeconds;
     }
-
     public override void Die() => SceneManager.Instance.CurrentScene.RemoveObject(this);
     private bool IsAttackState()
     {
@@ -126,9 +123,8 @@ public class Player : Humanoid
     public override void TakeDamage(int pDamage)
     {
         base.TakeDamage(pDamage);
-        Position = originPosition;
+        Position = _originalPosition;
     }
-
     #region Collisions
     private void EnemyCollision(Enemy enemy)
     {
@@ -143,10 +139,10 @@ public class Player : Humanoid
                 enemy.TakeDamage(Strength);
                 break;
             default:
-                throw new NotImplementedException();
+                TakeDamage(5);
+                break;
         }
     }
     private void InteractableCollision(Interactable interactable) => interactable.Interact(this);
-    
     #endregion
 }

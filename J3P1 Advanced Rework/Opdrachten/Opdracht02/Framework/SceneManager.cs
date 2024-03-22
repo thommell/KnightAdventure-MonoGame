@@ -28,15 +28,11 @@ public class SceneManager
             throw new Exception("No scenes in the ScenesList");
         var firstScene = ScenesList.First();
         CurrentScene = firstScene; 
-        
     }
-    public void LoadAllScenes()
+    public void LoadCurrentScene()
     {
-        foreach (var scene in ScenesList)
-        {
-            scene.AwakeScene();
-            scene.LoadScene();
-        }
+        CurrentScene.AwakeScene();
+        CurrentScene.LoadScene();
     }
     public void UpdateManager(GameTime pGameTime) => CurrentScene.UpdateScene(pGameTime);
     public void DrawManager(SpriteBatch pSpriteBatch) => CurrentScene.DrawScene(pSpriteBatch);
@@ -58,6 +54,7 @@ public class SceneManager
             Console.WriteLine(scene);
             if (scene.GetType() != pTargetScene.GetType()) continue;
             CurrentScene = scene;
+            LoadCurrentScene();
         }
     }
 }

@@ -8,7 +8,7 @@ public abstract class Humanoid : GameObject, IHealth
 {
     private int _health;
     private int _strength;
-    private bool displayHealth = true;
+    private bool _displayHealth = true;
     private readonly Vector2 _textDimensions = new();
 
     public int Health
@@ -49,12 +49,14 @@ public abstract class Humanoid : GameObject, IHealth
         List<GameObject> objects = SceneManager.Instance.CurrentScene.GameObjects;
         for (int i = objects.Count - 1; i >= 0; i--)
         {
-            // continue back through the loop to check if its not colliding with itself
+            // bug fix for trying to get a (potential) iteration out of range
+            if (i > objects.Count - 1) return;
+            // continue the loop to check if the object isn't checking itself
             if (objects[i] == this) continue;
-            // continue back through the loop if there is no collision
+            // continue the loop if there is no collision
             if (!objects[i].Rectangle.Intersects(Rectangle)) continue;
             OnCollision(objects[i]);
-        }   
+        }
     }
     protected abstract void Movement(GameTime pGameTime);
     /// <summary>

@@ -8,7 +8,7 @@ namespace J3P1_Advanced_Rework.Opdrachten.Opdracht01;
 
 public class Game1 : Game
 {
-    private GraphicsDeviceManager _graphics;
+    private readonly GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
     public Game1()
     {
@@ -21,7 +21,7 @@ public class Game1 : Game
         SceneManager.GraphicsDevice = _graphics.GraphicsDevice;
         SceneManager.Game1 = this;
         SceneManager.AwakeManager();
-        base.Initialize();   
+        base.Initialize();
     }
     protected override void LoadContent()
     {

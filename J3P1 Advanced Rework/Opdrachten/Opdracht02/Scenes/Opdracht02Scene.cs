@@ -28,11 +28,11 @@ public class Opdracht02Scene : Scene
         Texture2D waypointTex = SceneManager.Instance.Manager.Load<Texture2D>("Flag");
         
         var bounds1 = new Vector2(100, 100);
-        var bounds2 = new Vector2(800, 400);
+        var bounds2 = new Vector2(700, 400);
         
         #region Objects Creation
 
-        for (var i = 0; i < 100; i++)
+        for (var i = 0; i < 5; i++)
         {
             var waypoint = new Waypoint(new Vector2(0, 0), waypointTex);
             waypoint.Position = waypoint.GetRandomPosition(bounds1, bounds2);
@@ -45,7 +45,7 @@ public class Opdracht02Scene : Scene
         var weapon = new Weapon(new Vector2(WindowWidth / 4, WindowHeight / 2), weaponTex);
         var gate = new Gate(new Vector2(WindowWidth / 1.25f, WindowHeight / 1.25f), gateTex, new MenuScene());
         
-        var enemy1 = new Enemy(new Vector2(500, 200), enemyTex, 10, 5, 100, _waypoints);
+        var enemy1 = new Enemy(new Vector2(WindowWidth / 2, WindowHeight / 2), enemyTex, 10, 5, 30);
         
         #endregion
         GameObjects.Add(player);

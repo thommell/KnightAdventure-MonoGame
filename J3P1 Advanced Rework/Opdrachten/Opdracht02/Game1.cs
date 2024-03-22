@@ -28,7 +28,7 @@ public class Game1 : Game
         SceneManager.Instance.Manager = Content;
         SceneManager.Instance.Font = Content.Load<SpriteFont>("SpriteFont");
         SceneManager.Instance.Viewport = new Viewport(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
-        SceneManager.Instance.LoadAllScenes();
+        SceneManager.Instance.LoadCurrentScene();
     }
     protected override void Update(GameTime gameTime)
     {
