@@ -39,9 +39,9 @@ public class Scene
    }
    public virtual void LoadScene()
    {
-      for (int i = 0; i < GameObjects.Count; i++)
+      foreach (var gameObject in GameObjects)
       {
-         GameObjects[i].LoadObject();
+         gameObject.LoadObject();
       }
    }
    public virtual void UpdateScene(GameTime pGameTime)

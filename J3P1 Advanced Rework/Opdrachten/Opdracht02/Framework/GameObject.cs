@@ -80,5 +80,6 @@ public class GameObject
     {
         return new Vector2(Texture.Width * 0.5f, Texture.Height * 0.5f);
     }
-    public virtual void DrawObject(SpriteBatch pSpriteBatch) => pSpriteBatch.Draw(Texture, _position, null, Color, MathHelper.ToRadians(Rotation), Origin, Vector2.One, SpriteEffects.None, Layer);
+    public virtual void DrawObject(SpriteBatch pSpriteBatch) => 
+        pSpriteBatch.Draw(Texture, _position, null, Color, MathHelper.ToRadians(Rotation), Origin, Vector2.One, SpriteEffects.None, Layer);
 }

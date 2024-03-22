@@ -58,8 +58,8 @@ public abstract class Button : GameObject
         
         CheckStates();
         buttonStateMachine.UpdateState();
-        Console.WriteLine(mouseState);
-        Console.WriteLine(buttonState);
+        // Console.WriteLine(mouseState);
+        // Console.WriteLine(buttonState);
         previousMouseClick = mouseState.LeftButton;
         base.UpdateObject(pGameTime);
     }
