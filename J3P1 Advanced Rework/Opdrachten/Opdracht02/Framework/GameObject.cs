@@ -15,6 +15,7 @@ public class GameObject
     private Rectangle _rectangle;
     private Color _color;
     private float _rotation;
+    private float _layer;
     
     #endregion
     #region Properties
@@ -46,6 +47,16 @@ public class GameObject
         set => _rotation = value;
     }
 
+    public float Layer
+    {
+        get
+        {
+            if (_layer == 0)
+                _layer = 1f;
+            return _layer;
+        }
+        set => _layer = value;
+    }
     public Color Color
     {
         get => _color;
@@ -69,5 +80,5 @@ public class GameObject
     {
         return new Vector2(Texture.Width * 0.5f, Texture.Height * 0.5f);
     }
-    public virtual void DrawObject(SpriteBatch pSpriteBatch) => pSpriteBatch.Draw(Texture, _position, null, Color, MathHelper.ToRadians(Rotation), Origin, Vector2.One, SpriteEffects.None, 0f);
+    public virtual void DrawObject(SpriteBatch pSpriteBatch) => pSpriteBatch.Draw(Texture, _position, null, Color, MathHelper.ToRadians(Rotation), Origin, Vector2.One, SpriteEffects.None, Layer);
 }

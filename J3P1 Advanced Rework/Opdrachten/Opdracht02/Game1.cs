@@ -25,7 +25,7 @@ public class Game1 : Game
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
         SceneManager.Instance.Manager = Content;
-        
+        SceneManager.Instance.Font = Content.Load<SpriteFont>("SpriteFont");
         SceneManager.Instance.Viewport = new Viewport(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
         SceneManager.Instance.LoadAllScenes();
     }

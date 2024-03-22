@@ -1,47 +1,38 @@
 using System;
 using System.Collections.Generic;
-using J3P1_Advanced_Rework.Opdrachten.Opdracht02.GameObjects;
+using System.Linq;
 using J3P1_Advanced_Rework.Opdrachten.Opdracht02.Scenes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-
 namespace J3P1_Advanced_Rework.Opdrachten.Opdracht02.Framework;
-
 public class SceneManager
 {
     private static SceneManager _instance;
-    public static SceneManager Instance {
-        get
-        {
-            if (_instance == null)
-            {
-                _instance = new SceneManager();
-            }
-
-            return _instance;
-        }
-    }
+    public static SceneManager Instance { get { return _instance ??= new SceneManager(); } }
     private SceneManager() {}
-    
-    public Scene CurrentScene;
-    public GraphicsDevice GraphicsDevice;
-    private List<Scene> ScenesList = new List<Scene>();
-    private int IndexOfScene = 0;
-    public Game1 Game1;
-    public ContentManager Manager;
-    public Viewport Viewport;
+    #region Properties
+    public Scene CurrentScene { get; private set; }
+    public GraphicsDevice GraphicsDevice { get; set; }
+    private List<Scene> ScenesList { get; set; } = new List<Scene>();
+    public ContentManager Manager { get; set; }
+    public Viewport Viewport { get; set; }
+    public SpriteFont Font { get; set; }
+    public Game1 Game1 { get; set; }
+    #endregion
+   
     public void AwakeManager()
     {
         MakeScenes();
-        
         if (ScenesList.Count <= 0)
             throw new Exception("No scenes in the ScenesList");
-        CurrentScene = ScenesList[IndexOfScene];
+        var firstScene = ScenesList.First();
+        CurrentScene = firstScene; 
+        
     }
     public void LoadAllScenes()
     {
-        foreach (Scene scene in ScenesList)
+        foreach (var scene in ScenesList)
         {
             scene.AwakeScene();
             scene.LoadScene();
