@@ -1,6 +1,7 @@
 ﻿using J3P1_Advanced_Rework.Opdrachten.Opdracht02.Framework;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace J3P1_Advanced_Rework.Opdrachten.Opdracht02;
 
@@ -31,6 +32,8 @@ public class Game1 : Game
     }
     protected override void Update(GameTime gameTime)
     {
+        if (Keyboard.GetState().IsKeyDown(Keys.Escape))
+            Exit();
         SceneManager.Instance.UpdateManager(gameTime);
         base.Update(gameTime);
     }

@@ -22,10 +22,13 @@ public class Player : Humanoid
     #region Variables
     
     private float _speed;
+    
     private StateMachinePlayer _playerStateManager;
+    
     private bool _hasShield;
     private bool _hasWeapon;
-    
+
+    private Vector2 originPosition;
     
     #endregion
     #region Properties
@@ -55,7 +58,11 @@ public class Player : Humanoid
 
     #endregion
 
-    public Player(Vector2 pPosition, Texture2D pTexture, float pSpeed, int pHealth) : base(pPosition, pTexture, pHealth) => Speed = pSpeed;
+    public Player(Vector2 pPosition, Texture2D pTexture, float pSpeed, int pHealth, int pStrength) : base(pPosition, pTexture, pHealth, pStrength)
+    {
+        Speed = pSpeed;
+        originPosition = pPosition;
+    }
     public override void LoadObject()
     {
         base.LoadObject();
@@ -82,17 +89,17 @@ public class Player : Humanoid
         if (collision is not Enemy && collision is not Interactable) return;
         switch (collision)
         {
-            case Enemy enemy when IsAttackState():
-                enemy.Die();
+            case Enemy enemy:
+                EnemyCollision(enemy);
                 break;
             case Interactable interactable:
-                interactable.Interact(this);
+                InteractableCollision(interactable);
                 break;
         }
     }
-    public override void Die() => SceneManager.Instance.Game1.Exit();
-
-    private void ClampPlayer() => Position = new Vector2(Math.Clamp(Position.X, 0, SceneManager.Instance.Viewport.Width - Texture.Width), Math.Clamp(Position.Y, 0, SceneManager.Instance.Viewport.Height - Texture.Height));
+    private void ClampPlayer() => 
+        Position = new Vector2(Math.Clamp(Position.X, Origin.X, SceneManager.Instance.Viewport.Width - Texture.Width),
+            Math.Clamp(Position.Y, Origin.Y, SceneManager.Instance.Viewport.Height - Texture.Height));
     protected override void Movement(GameTime pGameTime)
     {
         KeyboardState keyboard = Keyboard.GetState();
@@ -109,9 +116,37 @@ public class Player : Humanoid
         direction.Normalize();
         Position += direction * Speed * (float)pGameTime.ElapsedGameTime.TotalSeconds;
     }
+
+    public override void Die() => SceneManager.Instance.CurrentScene.RemoveObject(this);
     private bool IsAttackState()
     {
         var psm = _playerStateManager;
         return psm.CurrentState == psm.PlayerWeaponShield;
     }
+    public override void TakeDamage(int pDamage)
+    {
+        base.TakeDamage(pDamage);
+        Position = originPosition;
+    }
+
+    #region Collisions
+    private void EnemyCollision(Enemy enemy)
+    {
+        var psm = _playerStateManager;
+        switch (psm.CurrentState)
+        {
+            case PlayerWeaponShield:
+                enemy.Die();
+                break;
+            case PlayerWeapon:
+                enemy.Attack(this);
+                enemy.TakeDamage(Strength);
+                break;
+            default:
+                throw new NotImplementedException();
+        }
+    }
+    private void InteractableCollision(Interactable interactable) => interactable.Interact(this);
+    
+    #endregion
 }

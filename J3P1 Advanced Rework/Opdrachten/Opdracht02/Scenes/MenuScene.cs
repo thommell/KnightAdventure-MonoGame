@@ -13,9 +13,10 @@ public class MenuScene : Scene
         float padding = 10f;
         _menuTexture = SceneManager.Instance.Manager.Load<Texture2D>("menu");
         Texture2D buttonTexture = SceneManager.Instance.Manager.Load<Texture2D>("UI_Tile_128x64");
-
+        
         var playButton = new PlayButton(new Vector2(WindowWidth / 4, WindowHeight / 2), buttonTexture, "PLAY", new Opdracht02Scene());
         var quitButton = new QuitButton(new Vector2(playButton.Position.X, playButton.Position.Y + buttonTexture.Height + padding), buttonTexture, "QUIT");
+        
         GameObjects.Add(playButton);
         GameObjects.Add(quitButton);
         base.LoadScene();

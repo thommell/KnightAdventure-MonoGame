@@ -40,13 +40,11 @@ public class GameObject
         get => _rectangle;
         set => _rectangle = value;
     }
-
     public float Rotation
     {
         get => _rotation;
         set => _rotation = value;
     }
-
     public float Layer
     {
         get
