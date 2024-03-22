@@ -19,9 +19,9 @@ public class StateMachinePlayer
     #region PlayerTextures
 
     //private Texture2D _playerNormalTex = SceneManager.Manager.Load<Texture2D>("Knight");
-    private Texture2D _playerShieldTex = SceneManager.Manager.Load<Texture2D>("KnightShield");
-    private Texture2D _playerWeaponTex = SceneManager.Manager.Load<Texture2D>("KnightWeapon");
-    private Texture2D _playerWeaponShieldTex = SceneManager.Manager.Load<Texture2D>("KnightWeaponShield");
+    private Texture2D _playerShieldTex = SceneManager.Instance.Manager.Load<Texture2D>("KnightShield");
+    private Texture2D _playerWeaponTex = SceneManager.Instance.Manager.Load<Texture2D>("KnightWeapon");
+    private Texture2D _playerWeaponShieldTex = SceneManager.Instance.Manager.Load<Texture2D>("KnightWeaponShield");
 
     #endregion
 

@@ -10,6 +10,6 @@ public class Weapon : Interactable
     public override void Interact(Player pPlayer)
     {
         pPlayer.HasWeapon = true;
-        SceneManager.CurrentScene.RemoveObject(this);
+        SceneManager.Instance.CurrentScene.RemoveObject(this);
     }
 }

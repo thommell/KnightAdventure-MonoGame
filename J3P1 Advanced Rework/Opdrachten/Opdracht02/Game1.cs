@@ -16,28 +16,29 @@ public class Game1 : Game
     }
     protected override void Initialize()
     {
-        SceneManager.GraphicsDevice = _graphics.GraphicsDevice;
-        SceneManager.Game1 = this;
-        SceneManager.AwakeManager();
-        base.Initialize();   
+        SceneManager.Instance.GraphicsDevice = _graphics.GraphicsDevice;
+        SceneManager.Instance.Game1 = this;
+        SceneManager.Instance.AwakeManager();
+        base.Initialize();
     }
     protected override void LoadContent()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
-        SceneManager.Manager = Content;
-        SceneManager.Viewport = new Viewport(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
-        SceneManager.LoadManager();
+        SceneManager.Instance.Manager = Content;
+        
+        SceneManager.Instance.Viewport = new Viewport(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
+        SceneManager.Instance.LoadAllScenes();
     }
     protected override void Update(GameTime gameTime)
     {
-        SceneManager.UpdateManager(gameTime);
+        SceneManager.Instance.UpdateManager(gameTime);
         base.Update(gameTime);
     }
     protected override void Draw(GameTime gameTime)
     {
         _spriteBatch.Begin();
         GraphicsDevice.Clear(Color.CornflowerBlue);
-        SceneManager.DrawManager(_spriteBatch);
+        SceneManager.Instance.DrawManager(_spriteBatch);
         _spriteBatch.End();
         base.Draw(gameTime);
     }

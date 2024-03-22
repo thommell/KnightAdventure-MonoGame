@@ -9,9 +9,9 @@ public class MenuScene : Scene
 {
     public override void LoadScene()
     {
-        Texture2D buttonTexture = SceneManager.Manager.Load<Texture2D>("UI_Tile_128x64");
+        Texture2D buttonTexture = SceneManager.Instance.Manager.Load<Texture2D>("UI_Tile_128x64");
 
-        var button = new PlayButton(new Vector2(WindowWidth / 2, WindowHeight / 2), buttonTexture);
+        var button = new PlayButton(new Vector2(WindowWidth / 2, WindowHeight / 2), buttonTexture, new Opdracht02Scene());
         
         GameObjects.Add(button);
         base.LoadScene();

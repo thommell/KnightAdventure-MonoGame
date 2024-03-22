@@ -9,10 +9,10 @@ public class Opdracht02Scene : Scene
 {
     public override void LoadScene()
     {
-        Texture2D playerTex = SceneManager.Manager.Load<Texture2D>("Knight");
-        Texture2D shieldTex = SceneManager.Manager.Load<Texture2D>("Shield");
-        Texture2D weaponTex = SceneManager.Manager.Load<Texture2D>("Weapon");
-        Texture2D gateTex = SceneManager.Manager.Load<Texture2D>("Gate");
+        Texture2D playerTex = SceneManager.Instance.Manager.Load<Texture2D>("Knight");
+        Texture2D shieldTex = SceneManager.Instance.Manager.Load<Texture2D>("Shield");
+        Texture2D weaponTex = SceneManager.Instance.Manager.Load<Texture2D>("Weapon");
+        Texture2D gateTex = SceneManager.Instance.Manager.Load<Texture2D>("Gate");
 
         #region Objects Creation
 
@@ -38,13 +38,15 @@ public class Opdracht02Scene : Scene
                 WindowWidth / 1.25f,
                 WindowHeight / 1.25f
             ),
-            gateTex);
+            gateTex, new MenuScene());
 
         #endregion
+        
         GameObjects.Add(player);
         GameObjects.Add(shield);
         GameObjects.Add(weapon);
         GameObjects.Add(gate);
+        
         base.LoadScene();
     }
 }

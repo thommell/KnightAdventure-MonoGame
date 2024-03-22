@@ -34,8 +34,8 @@ public class Scene
 
    public virtual void AwakeScene()
    {
-      WindowWidth = SceneManager.GraphicsDevice.Viewport.Width;
-      WindowHeight = SceneManager.GraphicsDevice.Viewport.Height;
+      WindowWidth = SceneManager.Instance.GraphicsDevice.Viewport.Width;
+      WindowHeight = SceneManager.Instance.GraphicsDevice.Viewport.Height;
    }
    public virtual void LoadScene()
    {

@@ -18,7 +18,7 @@ public abstract class Interactable : GameObject
     }
     private Player GetPlayer()
     {
-        List<GameObject> objects = SceneManager.CurrentScene.GameObjects;
+        List<GameObject> objects = SceneManager.Instance.CurrentScene.GameObjects;
         Player localPlayer;
         for (int i = objects.Count - 1; i >= 0; i--)
         {

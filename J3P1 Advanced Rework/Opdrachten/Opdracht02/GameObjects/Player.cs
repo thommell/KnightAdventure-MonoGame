@@ -80,7 +80,7 @@ public class Player : GameObject
     }
     private void CheckCollision()
     {
-        List<GameObject> objects = SceneManager.CurrentScene.GameObjects;
+        List<GameObject> objects = SceneManager.Instance.CurrentScene.GameObjects;
         for (int i = objects.Count - 1; i >= 0; i--)
         {
             // continue back through the loop to check if its not colliding with itself
@@ -95,7 +95,7 @@ public class Player : GameObject
             obj.Interact(this);
         }   
     }
-    private void ClampPlayer() => Position = new Vector2(Math.Clamp(Position.X, 0, SceneManager.Viewport.Width - Texture.Width), Math.Clamp(Position.Y, 0, SceneManager.Viewport.Height - Texture.Height));
+    private void ClampPlayer() => Position = new Vector2(Math.Clamp(Position.X, 0, SceneManager.Instance.Viewport.Width - Texture.Width), Math.Clamp(Position.Y, 0, SceneManager.Instance.Viewport.Height - Texture.Height));
     private void Movement(GameTime pGameTime)
     {
         KeyboardState keyboard = Keyboard.GetState();
