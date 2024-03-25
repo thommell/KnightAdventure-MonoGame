@@ -10,6 +10,6 @@ public class Shield : Interactable
     public override void Interact(Player pPlayer)
     {
         pPlayer.HasShield = true;
-        SceneManager.CurrentScene.RemoveObject(this);
+        SceneManager.Instance.CurrentScene.RemoveObject(this);
     }
 }

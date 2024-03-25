@@ -1,34 +1,42 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using J3P1_Advanced_Rework.Opdrachten.Opdracht02.Scenes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-
 namespace J3P1_Advanced_Rework.Opdrachten.Opdracht02.Framework;
-
-public static class SceneManager
+public class SceneManager
 {
-    public static Scene CurrentScene;
-    public static GraphicsDevice GraphicsDevice;
-    public static List<Scene> ScenesList = new List<Scene>();
-    public static int IndexOfScene = 0;
-    public static Game1 Game1;
-    public static ContentManager Manager;
-    public static Viewport Viewport;
-    public static void SwapScene() {}
-    public static void AwakeManager()
+    private static SceneManager _instance;
+    public static SceneManager Instance { get { return _instance ??= new SceneManager(); } }
+    private SceneManager() {}
+    #region Properties
+    public Scene CurrentScene { get; private set; }
+    public GraphicsDevice GraphicsDevice { get; set; }
+    private List<Scene> ScenesList { get; set; } = new List<Scene>();
+    public ContentManager Manager { get; set; }
+    public Viewport Viewport { get; set; }
+    public SpriteFont Font { get; set; }
+    public Game1 Game1 { get; set; }
+    #endregion
+   
+    public void AwakeManager()
     {
         MakeScenes();
         if (ScenesList.Count <= 0)
             throw new Exception("No scenes in the ScenesList");
-        CurrentScene = ScenesList[IndexOfScene];
-        CurrentScene.AwakeScene();
+        var firstScene = ScenesList.First();
+        CurrentScene = firstScene; 
     }
-    public static void LoadManager() => CurrentScene.LoadScene();
-    public static void UpdateManager(GameTime pGameTime) => CurrentScene.UpdateScene(pGameTime);
-    public static void DrawManager(SpriteBatch pSpriteBatch) => CurrentScene.DrawScene(pSpriteBatch);
-    private static void MakeScenes()
+    public void LoadCurrentScene()
+    {
+        CurrentScene.AwakeScene();
+        CurrentScene.LoadScene();
+    }
+    public void UpdateManager(GameTime pGameTime) => CurrentScene.UpdateScene(pGameTime);
+    public void DrawManager(SpriteBatch pSpriteBatch) => CurrentScene.DrawScene(pSpriteBatch);
+    private void MakeScenes()
     {
         var scene01 = new MenuScene();
         var scene02 = new Opdracht02Scene();
@@ -39,12 +47,14 @@ public static class SceneManager
     /// 
     /// </summary>
     /// <param name="pTargetScene">New instance of the wanted scene</param>
-    public static void SwapScene(Scene pTargetScene)
+    public void SwapScene(Scene pTargetScene)
     {
         foreach (Scene scene in ScenesList)
         {
-            if (scene == pTargetScene) continue;
+            Console.WriteLine(scene);
+            if (scene.GetType() != pTargetScene.GetType()) continue;
             CurrentScene = scene;
+            LoadCurrentScene();
         }
     }
 }

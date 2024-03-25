@@ -34,14 +34,14 @@ public class Scene
 
    public virtual void AwakeScene()
    {
-      WindowWidth = SceneManager.GraphicsDevice.Viewport.Width;
-      WindowHeight = SceneManager.GraphicsDevice.Viewport.Height;
+      WindowWidth = SceneManager.Instance.GraphicsDevice.Viewport.Width;
+      WindowHeight = SceneManager.Instance.GraphicsDevice.Viewport.Height;
    }
    public virtual void LoadScene()
    {
-      for (int i = 0; i < GameObjects.Count; i++)
+      foreach (var gameObject in GameObjects)
       {
-         GameObjects[i].LoadObject();
+         gameObject.LoadObject();
       }
    }
    public virtual void UpdateScene(GameTime pGameTime)

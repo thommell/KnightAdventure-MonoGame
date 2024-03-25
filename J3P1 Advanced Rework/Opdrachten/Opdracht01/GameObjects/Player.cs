@@ -91,8 +91,7 @@ public class Player : GameObject
             // continue back through the loop if there is no collision
             if (!objects[i].Rectangle.Intersects(Rectangle)) continue;
             // continue back through the loop if object isn't an interactable
-            //if (!objects[i].GetType().IsSubclassOf(typeof(Interactable))) continue;
-            if (objects[i] is not Interactable) continue; // if this one doesnt work use line above
+            if (objects[i] is not Interactable) continue;
             Console.WriteLine("Interactable Collision");
             Interactable obj = (Interactable)objects[i];
             obj.Interact(this);

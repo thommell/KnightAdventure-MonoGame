@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace J3P1_Advanced_Rework.Opdrachten.Opdracht02.GameObjects;
 
-public class Player : GameObject
+public class Player : Humanoid
 {
 
     #region Keyboard
@@ -22,10 +22,13 @@ public class Player : GameObject
     #region Variables
     
     private float _speed;
+    
     private StateMachinePlayer _playerStateManager;
+    
     private bool _hasShield;
     private bool _hasWeapon;
-    
+
+    private readonly Vector2 _originalPosition;
     
     #endregion
     #region Properties
@@ -34,7 +37,6 @@ public class Player : GameObject
         get => _speed;
         set => _speed = value;
     }
-
     public bool HasWeapon
     {
         set
@@ -43,7 +45,6 @@ public class Player : GameObject
             SwitchState(); 
         } 
     }
-
     public bool HasShield
     {
         set
@@ -55,7 +56,11 @@ public class Player : GameObject
 
     #endregion
 
-    public Player(Vector2 pPosition, Texture2D pTexture, float pSpeed) : base(pPosition, pTexture) => Speed = pSpeed;
+    public Player(Vector2 pPosition, Texture2D pTexture, float pSpeed, int pHealth, int pStrength) : base(pPosition, pTexture, pHealth, pStrength)
+    {
+        Speed = pSpeed;
+        _originalPosition = pPosition;
+    }
     public override void LoadObject()
     {
         base.LoadObject();
@@ -64,8 +69,6 @@ public class Player : GameObject
     public override void UpdateObject(GameTime pGameTime)
     {
         ClampPlayer();
-        Movement(pGameTime);
-        CheckCollision();
         base.UpdateObject(pGameTime);
     }
     private void SwitchState()
@@ -78,25 +81,24 @@ public class Player : GameObject
         if (_hasShield && _hasWeapon)
             sm.ChangeState(sm.PlayerWeaponShield);
     }
-    private void CheckCollision()
+    protected override void OnCollision(GameObject collision)
     {
-        List<GameObject> objects = SceneManager.CurrentScene.GameObjects;
-        for (int i = objects.Count - 1; i >= 0; i--)
+        Console.WriteLine(collision + " has collided with the player!");
+        if (collision is not Enemy && collision is not Interactable) return;
+        switch (collision)
         {
-            // continue back through the loop to check if its not colliding with itself
-            if (objects[i] == this) continue;
-            // continue back through the loop if there is no collision
-            if (!objects[i].Rectangle.Intersects(Rectangle)) continue;
-            // continue back through the loop if object isn't an interactable
-            //if (!objects[i].GetType().IsSubclassOf(typeof(Interactable))) continue;
-            if (objects[i] is not Interactable) continue; // if this one doesnt work use line above
-            Console.WriteLine("Interactable Collision");
-            Interactable obj = (Interactable)objects[i];
-            obj.Interact(this);
-        }   
+            case Enemy enemy:
+                EnemyCollision(enemy);
+                break;
+            case Interactable interactable:
+                InteractableCollision(interactable);
+                break;
+        }
     }
-    private void ClampPlayer() => Position = new Vector2(Math.Clamp(Position.X, 0, SceneManager.Viewport.Width - Texture.Width), Math.Clamp(Position.Y, 0, SceneManager.Viewport.Height - Texture.Height));
-    private void Movement(GameTime pGameTime)
+    private void ClampPlayer() => 
+        Position = new Vector2(Math.Clamp(Position.X, Origin.X, SceneManager.Instance.Viewport.Width - Texture.Width),
+            Math.Clamp(Position.Y, Origin.Y, SceneManager.Instance.Viewport.Height - Texture.Height));
+    protected override void Movement(GameTime pGameTime)
     {
         KeyboardState keyboard = Keyboard.GetState();
         Vector2 direction = Vector2.Zero;
@@ -112,4 +114,35 @@ public class Player : GameObject
         direction.Normalize();
         Position += direction * Speed * (float)pGameTime.ElapsedGameTime.TotalSeconds;
     }
+    public override void Die() => SceneManager.Instance.CurrentScene.RemoveObject(this);
+    private bool IsAttackState()
+    {
+        var psm = _playerStateManager;
+        return psm.CurrentState == psm.PlayerWeaponShield;
+    }
+    public override void TakeDamage(int pDamage)
+    {
+        base.TakeDamage(pDamage);
+        Position = _originalPosition;
+    }
+    #region Collisions
+    private void EnemyCollision(Enemy enemy)
+    {
+        var psm = _playerStateManager;
+        switch (psm.CurrentState)
+        {
+            case PlayerWeaponShield:
+                enemy.Die();
+                break;
+            case PlayerWeapon:
+                enemy.Attack(this);
+                enemy.TakeDamage(Strength);
+                break;
+            default:
+                TakeDamage(5);
+                break;
+        }
+    }
+    private void InteractableCollision(Interactable interactable) => interactable.Interact(this);
+    #endregion
 }
