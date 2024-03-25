@@ -8,16 +8,8 @@ namespace J3P1_Advanced_Rework.Opdrachten.Opdracht02.Scenes;
 
 public class Opdracht02Scene : Scene
 {
-    private List<Waypoint> _waypoints = new();
-
-    private List<Vector2> waypointPositions = new()
-    {
-    new Vector2(100, 50),
-    new Vector2(150, 100),
-    new Vector2(200, 50),
-    new Vector2(300, 200),
-    new Vector2(350, 250)
-    };
+    private List<Waypoint> _waypointsEnemy1 = new();
+    private List<Waypoint> _waypointsEnemy2 = new();
     public override void LoadScene()
     {
         Texture2D playerTex = SceneManager.Instance.Manager.Load<Texture2D>("Knight");
@@ -37,7 +29,14 @@ public class Opdracht02Scene : Scene
             var waypoint = new Waypoint(new Vector2(0, 0), waypointTex);
             waypoint.Position = waypoint.GetRandomPosition(bounds1, bounds2);
             GameObjects.Add(waypoint);
-            _waypoints.Add(waypoint);
+            _waypointsEnemy1.Add(waypoint);
+        }
+        for (var i = 0; i < 5; i++)
+        {
+            var waypoint = new Waypoint(new Vector2(0, 0), waypointTex);
+            waypoint.Position = waypoint.GetRandomPosition(bounds1, bounds2);
+            GameObjects.Add(waypoint);
+            _waypointsEnemy2.Add(waypoint);
         }
         
         var player = new Player(new Vector2(playerTex.Width, playerTex.Height), playerTex, 250f, 10, 5);
@@ -45,7 +44,8 @@ public class Opdracht02Scene : Scene
         var weapon = new Weapon(new Vector2(WindowWidth / 4, WindowHeight / 2), weaponTex);
         var gate = new Gate(new Vector2(WindowWidth / 1.25f, WindowHeight / 1.25f), gateTex, new MenuScene());
         
-        var enemy1 = new Enemy(new Vector2(WindowWidth / 2, WindowHeight / 2), enemyTex, 10, 5, 30);
+        var enemy1 = new Enemy(new Vector2(WindowWidth / 2, WindowHeight / 2), enemyTex, 10, 5, 30, _waypointsEnemy1);
+        var enemy2 = new Enemy(new Vector2(WindowWidth / 4, WindowHeight / 2), enemyTex, 15, 10, 10, _waypointsEnemy2);
         
         #endregion
         GameObjects.Add(player);
@@ -53,6 +53,7 @@ public class Opdracht02Scene : Scene
         GameObjects.Add(weapon);
         GameObjects.Add(gate);
         GameObjects.Add(enemy1);
+        GameObjects.Add(enemy2);
         base.LoadScene();
     }
 }

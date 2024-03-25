@@ -10,10 +10,7 @@ public class EnemyChasingState : IEnemyState
 {
     private float _stamina;
     private float _originalStamina;
-
     private StateMachineEnemy _stateMachine;
-    
-    
     private Player _player;
     public Enemy Enemy { get; }
 
@@ -25,7 +22,11 @@ public class EnemyChasingState : IEnemyState
         _originalStamina = _stamina;
     }
 
-    public float Stamina => _stamina;
+    public float Stamina
+    {
+        get => _stamina;
+        set => _stamina = value;
+    }
 
     public void OnStateEnter()
     {
@@ -42,10 +43,11 @@ public class EnemyChasingState : IEnemyState
     }
     private void UpdatePosition(GameTime pGameTime)
     {
-        if (_stamina <= 0f)
+        if (Stamina <= 0)
             _stateMachine.ChangeState(_stateMachine.IdlingState);
-        Enemy.Position += 
-            Vector2.Normalize(_player.Position - Enemy.Position) * (Enemy.Speed * 3f) * (float)pGameTime.ElapsedGameTime.TotalSeconds;
+        if (_player.HasWeapon && _player.HasShield)
+            _stateMachine.ChangeState(_stateMachine.EvadingState);
+        Enemy.Position += Vector2.Normalize(_player.Position - Enemy.Position) * (Enemy.Speed * 3f) * (float)pGameTime.ElapsedGameTime.TotalSeconds;
     }
     private void UpdateStamina(GameTime pGameTime) =>
         _stamina -= (float)pGameTime.ElapsedGameTime.TotalSeconds;

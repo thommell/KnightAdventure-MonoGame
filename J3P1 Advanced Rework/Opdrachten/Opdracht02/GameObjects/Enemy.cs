@@ -32,9 +32,10 @@ public class Enemy : Humanoid
     public Player Player => _player;
 
     #endregion
-    public Enemy(Vector2 pPosition, Texture2D pTexture, int pHealth, int pStrength, int pSpeed) : base(pPosition, pTexture, pHealth, pStrength)
+    public Enemy(Vector2 pPosition, Texture2D pTexture, int pHealth, int pStrength, int pSpeed, List<Waypoint> pWaypoints) : base(pPosition, pTexture, pHealth, pStrength)
     {
         Speed = pSpeed;
+        _waypoints = pWaypoints;
     }
     public override void LoadObject()
     {
@@ -58,11 +59,16 @@ public class Enemy : Humanoid
     }
     private void CheckState()
     {
-        _stateMachineEnemy.ChangeState(IsChasing() ? _stateMachineEnemy.ChasingState : _stateMachineEnemy.PatrollingState);
-        if (_stateMachineEnemy.ChasingState.Stamina >= 0f) return;
-        _stateMachineEnemy.ChangeState(_stateMachineEnemy.IdlingState);
+        if (_player.HasWeapon && _player.HasShield)
+        {
+            _stateMachineEnemy.ChangeState(IsChasing() ? _stateMachineEnemy.EvadingState : _stateMachineEnemy.PatrollingState);  
+        }
+        else
+        {
+            _stateMachineEnemy.ChangeState(IsChasing() ? _stateMachineEnemy.ChasingState : _stateMachineEnemy.PatrollingState);
+        }
+        
     }
-    
     protected override void Movement(GameTime pGameTime)
     {
         Console.WriteLine(_stateMachineEnemy.CurrentState);

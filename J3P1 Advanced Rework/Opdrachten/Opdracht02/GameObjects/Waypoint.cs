@@ -7,7 +7,7 @@ namespace J3P1_Advanced_Rework.Opdrachten.Opdracht02.GameObjects;
 
 public class Waypoint : GameObject
 {
-    private Random _random = new Random();
+    private readonly Random _random = new Random();
     public Waypoint(Vector2 pPosition, Texture2D pTexture) : base(pPosition, pTexture) {}
     public Vector2 GetRandomPosition(Vector2 pos1, Vector2 pos2)
     {

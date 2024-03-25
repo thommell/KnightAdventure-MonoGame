@@ -39,6 +39,7 @@ public class Player : Humanoid
     }
     public bool HasWeapon
     {
+        get => _hasWeapon;
         set
         {
             _hasWeapon = value;
@@ -47,6 +48,7 @@ public class Player : Humanoid
     }
     public bool HasShield
     {
+        get => _hasShield;
         set
         {
             _hasShield = value;
@@ -100,26 +102,17 @@ public class Player : Humanoid
             Math.Clamp(Position.Y, Origin.Y, SceneManager.Instance.Viewport.Height - Texture.Height));
     protected override void Movement(GameTime pGameTime)
     {
-        KeyboardState keyboard = Keyboard.GetState();
+        KeyboardState state = Keyboard.GetState();
         Vector2 direction = Vector2.Zero;
-        if (keyboard.IsKeyDown(_upKey))
-            direction.Y--;
-        if (keyboard.IsKeyDown(_downKey))
-            direction.Y++;
-        if (keyboard.IsKeyDown(_rightKey))
-            direction.X++;
-        if (keyboard.IsKeyDown(_leftKey))
-            direction.X--;
+        direction.X += state.IsKeyDown(_rightKey) ? 1 : 0;
+        direction.X -= state.IsKeyDown(_leftKey) ? 1 : 0;
+        direction.Y += state.IsKeyDown(_downKey) ? 1 : 0;
+        direction.Y -= state.IsKeyDown(_upKey) ? 1 : 0;
         if (direction == Vector2.Zero) return;
         direction.Normalize();
         Position += direction * Speed * (float)pGameTime.ElapsedGameTime.TotalSeconds;
     }
     public override void Die() => SceneManager.Instance.CurrentScene.RemoveObject(this);
-    private bool IsAttackState()
-    {
-        var psm = _playerStateManager;
-        return psm.CurrentState == psm.PlayerWeaponShield;
-    }
     public override void TakeDamage(int pDamage)
     {
         base.TakeDamage(pDamage);

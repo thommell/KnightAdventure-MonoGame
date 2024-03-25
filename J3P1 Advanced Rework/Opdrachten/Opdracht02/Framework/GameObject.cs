@@ -13,6 +13,7 @@ public class GameObject
     private Vector2 _origin;
     private Texture2D _texture;
     private Rectangle _rectangle;
+    private Vector2 _scale;
     private Color _color;
     private float _rotation;
     private float _layer;
@@ -34,6 +35,12 @@ public class GameObject
     {
         get => _texture;
         set => _texture = value;
+    }
+
+    public Vector2 Scale
+    {
+        get => _scale;
+        set => _scale = value;
     }
     public Rectangle Rectangle
     {
@@ -66,6 +73,7 @@ public class GameObject
         Position = pPosition;
         Texture = pTexture;
         Color = Color.White;
+        Scale = new Vector2(1f, 1f);
         Origin = GetOrigin();
     }
     public virtual void LoadObject() => Rectangle = GetRectangle();
@@ -79,5 +87,5 @@ public class GameObject
         return new Vector2(Texture.Width * 0.5f, Texture.Height * 0.5f);
     }
     public virtual void DrawObject(SpriteBatch pSpriteBatch) => 
-        pSpriteBatch.Draw(Texture, _position, null, Color, MathHelper.ToRadians(Rotation), Origin, Vector2.One, SpriteEffects.None, Layer);
+        pSpriteBatch.Draw(Texture, _position, null, Color, MathHelper.ToRadians(Rotation), Origin, Scale, SpriteEffects.None, Layer);
 }

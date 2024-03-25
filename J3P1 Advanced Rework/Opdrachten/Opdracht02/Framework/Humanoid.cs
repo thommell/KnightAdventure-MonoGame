@@ -16,7 +16,6 @@ public abstract class Humanoid : GameObject, IHealth
         get => _health;
         set => _health = value;
     }
-
     protected int Strength
     {
         get => _strength;
@@ -39,6 +38,7 @@ public abstract class Humanoid : GameObject, IHealth
     public override void DrawObject(SpriteBatch pSpriteBatch)
     {
         base.DrawObject(pSpriteBatch);
+        if (!_displayHealth) return;
        pSpriteBatch.DrawString(SceneManager.Instance.Font, _health.ToString(),
            new Vector2(Position.X + _textDimensions.X, Position.Y - _textDimensions.Y),
            Color.White, Rotation, Origin, Vector2.One,

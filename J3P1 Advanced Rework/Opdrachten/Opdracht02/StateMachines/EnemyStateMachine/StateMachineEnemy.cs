@@ -17,6 +17,7 @@ public class StateMachineEnemy
     private EnemyPatrollingState _patrollingState;
     private EnemyIdlingState _idlingState;
     private EnemyChasingState _chasingState;
+    private EnemyEvadingState _evadingState;
     #endregion
     #endregion
     #region Properties
@@ -24,7 +25,7 @@ public class StateMachineEnemy
     public EnemyPatrollingState PatrollingState => _patrollingState;
     public EnemyIdlingState IdlingState => _idlingState;
     public EnemyChasingState ChasingState => _chasingState;
-
+    public EnemyEvadingState EvadingState => _evadingState;
     public IEnemyState CurrentState
     {
         get => _currentState;
@@ -40,7 +41,8 @@ public class StateMachineEnemy
     {
         _patrollingState = new EnemyPatrollingState(_enemy);
         _idlingState = new EnemyIdlingState(_enemy, this, 2f);
-        _chasingState = new EnemyChasingState(_enemy, this, 1f);
+        _chasingState = new EnemyChasingState(_enemy, this, 5f);
+        _evadingState = new EnemyEvadingState(_enemy, this, 1.5f);
         ChangeState(PatrollingState);
     }
     public void UpdateState(GameTime pGameTime)
