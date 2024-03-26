@@ -35,17 +35,17 @@ public class Opdracht02Scene : Scene
         {
             var waypoint = new Waypoint(new Vector2(0, 0), waypointTex);
             waypoint.Position = waypoint.GetRandomPosition(bounds1, bounds2);
-            GameObjects.Add(waypoint);
+           // GameObjects.Add(waypoint);
             _waypointsEnemy2.Add(waypoint);
         }
         
-        var player = new Player(new Vector2(playerTex.Width, playerTex.Height), playerTex, 250f, 10, 5);
+        var player = new Player(new Vector2(playerTex.Width,playerTex.Height), playerTex, 250f, 10, 5);
         var shield = new Shield(new Vector2(WindowWidth / 2, WindowHeight / 4), shieldTex);
         var weapon = new Weapon(new Vector2(WindowWidth / 4, WindowHeight / 2), weaponTex);
         var gate = new Gate(new Vector2(WindowWidth / 1.25f, WindowHeight / 1.25f), gateTex, new MenuScene());
         
         var enemy1 = new Enemy(new Vector2(WindowWidth / 2, WindowHeight / 2), enemyTex, 10, 5, 30, _waypointsEnemy1);
-        var enemy2 = new Enemy(new Vector2(WindowWidth / 4, WindowHeight / 2), enemyTex, 15, 10, 10, _waypointsEnemy2);
+        var enemy2 = new Enemy(new Vector2(WindowWidth / 2, WindowHeight / 2), enemyTex, 15, 10, 10, _waypointsEnemy2);
         
         #endregion
         GameObjects.Add(player);
@@ -53,7 +53,7 @@ public class Opdracht02Scene : Scene
         GameObjects.Add(weapon);
         GameObjects.Add(gate);
         GameObjects.Add(enemy1);
-        GameObjects.Add(enemy2);
+        //GameObjects.Add(enemy2);
         base.LoadScene();
     }
 }

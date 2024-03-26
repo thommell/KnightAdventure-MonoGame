@@ -55,6 +55,7 @@ public class SceneManager
             Console.WriteLine(scene);
             if (scene.GetType() != pTargetScene.GetType()) continue;
             CurrentScene = scene;
+            if (scene.IsLoaded) return;
             LoadCurrentScene();
         }
     }

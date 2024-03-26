@@ -49,7 +49,6 @@ public class Enemy : Humanoid
         CheckState();
         base.UpdateObject(pGameTime);
     }
-
     public void Attack(Player pPlayer)
     {
         Console.WriteLine("Enemy has attacked the player!!");
@@ -58,18 +57,14 @@ public class Enemy : Humanoid
     private void CheckState()
     {
         if (_player.HasWeapon && _player.HasShield)
-        {
             _stateMachineEnemy.ChangeState(IsChasing() ? _stateMachineEnemy.EvadingState : _stateMachineEnemy.PatrollingState);  
-        }
         else
-        {
             _stateMachineEnemy.ChangeState(IsChasing() ? _stateMachineEnemy.ChasingState : _stateMachineEnemy.PatrollingState);
-        }
         
     }
     protected override void Movement(GameTime pGameTime)
     {
-        Console.WriteLine(_stateMachineEnemy.CurrentState);
+        //Console.WriteLine(_stateMachineEnemy.CurrentState);
         _stateMachineEnemy.UpdateState(pGameTime);
     }
     public override void Die() =>

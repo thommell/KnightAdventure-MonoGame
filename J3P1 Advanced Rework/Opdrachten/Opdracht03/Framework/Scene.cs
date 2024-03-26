@@ -7,6 +7,7 @@ public class Scene
 {
    #region Variables
 
+   protected bool isLoaded;
    private float _windowWidth;
    private float _windowHeight;
    private List<GameObject> _gameObjects = new List<GameObject>();
@@ -30,6 +31,12 @@ public class Scene
       get => _gameObjects;
       protected set => _gameObjects = value;
    }
+
+   public bool IsLoaded
+   {
+      get => isLoaded;
+      set => isLoaded = value;
+   }
    #endregion
 
    public virtual void AwakeScene()
@@ -43,6 +50,7 @@ public class Scene
       {
          gameObject.LoadObject();
       }
+      isLoaded = true;
    }
    public virtual void UpdateScene(GameTime pGameTime)
    {

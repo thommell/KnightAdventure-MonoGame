@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -44,19 +46,33 @@ public abstract class Humanoid : GameObject, IHealth
            Color.White, Rotation, Origin, Vector2.One,
            SpriteEffects.None, Layer);
     }
+    // private void CheckCollision()
+    // {
+    //     List<GameObject> objects = SceneManager.Instance.CurrentScene.GameObjects;
+    //     for (int i = objects.Count - 1; i >= 0; i--)
+    //     {
+    //         // O/n^2 collision check fix ?
+    //         // bug fix for trying to get a (potential) iteration out of range
+    //         if (i > objects.Count - 1) return;
+    //         // continue the loop to check if the object isn't checking itself
+    //         if (objects[i] == this) continue;
+    //         // continue the loop if there is no collision
+    //         if (!objects[i].Rectangle.Intersects(Rectangle)) continue;
+    //         OnCollision(objects[i]);
+    //     }
+    // }
     private void CheckCollision()
     {
+        int parentIndex = 0;
         List<GameObject> objects = SceneManager.Instance.CurrentScene.GameObjects;
-        for (int i = objects.Count - 1; i >= 0; i--)
+        for (parentIndex = 0; parentIndex <= objects.Count; parentIndex++)
         {
-            // O/n^2 collision check fix ?
-            // bug fix for trying to get a (potential) iteration out of range
-            if (i > objects.Count - 1) return;
-            // continue the loop to check if the object isn't checking itself
-            if (objects[i] == this) continue;
-            // continue the loop if there is no collision
-            if (!objects[i].Rectangle.Intersects(Rectangle)) continue;
-            OnCollision(objects[i]);
+            int childIndex = 0;
+            for (childIndex = 1 + parentIndex; childIndex <= objects.Count - 1; childIndex++)
+            {
+                if (objects[childIndex].Rectangle.Intersects(Rectangle))
+                    OnCollision(objects[childIndex]);
+            }
         }
     }
     protected abstract void Movement(GameTime pGameTime);

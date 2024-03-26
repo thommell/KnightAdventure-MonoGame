@@ -1,3 +1,4 @@
+using System;
 using J3P1_Advanced_Rework.Opdrachten.Opdracht03.GameObjects;
 using Microsoft.Xna.Framework;
 
@@ -11,6 +12,10 @@ public class EnemyPatrollingState : IEnemyState
     public void OnStateExit() {}
     public void Update(GameTime pGameTime)
     {
+        if (Enemy.Waypoints == null)
+        {
+            
+        }
         foreach (var waypoint in Enemy.Waypoints)
         {
             if (Vector2.Distance(Enemy.Position, Enemy.Waypoints[indexOfWaypoints].Position) <= 1f)

@@ -80,7 +80,6 @@ public class Player : Humanoid
     protected override void OnCollision(GameObject collision)
     {
         Console.WriteLine(collision + " has collided with the player!");
-        if (collision is not Enemy && collision is not Interactable) return;
         switch (collision)
         {
             case Enemy enemy:
@@ -89,10 +88,13 @@ public class Player : Humanoid
             case Interactable interactable:
                 InteractableCollision(interactable);
                 break;
+            default:
+                return;
         }
     }
     protected override void Movement(GameTime pGameTime)
     {
+        Console.WriteLine(Position);
         KeyboardState state = Keyboard.GetState();
         Vector2 direction = Vector2.Zero;
         direction.X += state.IsKeyDown(_rightKey) ? 1 : 0;
@@ -132,7 +134,7 @@ public class Player : Humanoid
     #endregion
     private Vector2 ClampPlayer()
     {
-        return new Vector2(Math.Clamp(Position.X, Origin.X, SceneManager.Instance.Viewport.Width - Texture.Width),
-            Math.Clamp(Position.Y, Origin.Y, SceneManager.Instance.Viewport.Height - Texture.Height));
+        return new Vector2(Math.Clamp(Position.X, Origin.X, SceneManager.Instance.Viewport.Width - Origin.X),
+            Math.Clamp(Position.Y, Origin.Y, SceneManager.Instance.Viewport.Height - Origin.Y));
     }
 }
